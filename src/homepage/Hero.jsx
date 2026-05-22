@@ -2,7 +2,7 @@ import { Arrows } from "../assets/Assets";
 
 export default function Hero() {
   return (
-    <section className="h-screen flex flex-col lg:flex-row justify-end lg:justify-between lg:items-end px-8 py-10.5 gap-8 bg-[url('src/assets/images/bg-home-mobile.png')] lg:bg-[url('src/assets/images/bg-home.png')] bg-cover bg-bottom">
+    <section className="h-screen flex flex-col lg:flex-row justify-end lg:justify-between lg:items-end px-8 py-10.5 gap-8 bg-[url('/src/assets/images/bg-home-mobile.png')] lg:bg-[url('/src/assets/images/bg-home.png')] bg-cover bg-bottom">
       <div className="flex flex-col gap-6.5">
         <h1 className="font-stn font-bold text-am5xl/[90%] lg:text-am7xl">
           Albar<br/>
