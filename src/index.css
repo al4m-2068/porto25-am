@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@200..700&family=Stack+Sans+Text:wght@200..700&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-stn: 'Stack Sans Notch', sans-serif;
+  --font-stt: 'Stack Sans Text', sans-serif;
+  --color-amblue: #000640;
+  --color-amyellow: #F3AE41;
+  --color-amwhite: white;
+  --text-am7xl: 162px;
+  --text-am6xl: 72px;
+  --text-am5xl: 62px;
+  --text-am4xl: 48px;
+  --text-am3xl: 44px;
+  --text-am2xl: 42px;
+  --text-amxl: 32px;
+  --text-aml: 28px;
+  --text-amm: 24px;
+}
+
+* {
+  box-sizing: border-box;
+}
+body section {
+  @apply text-amwhite antialiased
+}
+
+.button {
+  @apply p-5 rounded-full flex uppercase
+}
+.bg-project {
+  background: radial-gradient(369.35% 122.21% at 49.87% -12.9%, #000640 60%, rgba(0, 6, 64, 0.00) 90%);
+}
+.bg-projectcard {
+  background-color: #000640;
+  background-blend-mode: exclusion;
+}
+.bg-projectcard-linear {
+  background-image: linear-gradient(0deg, #000640 14.84%, rgba(0, 6, 64, 0.00) 70.73%);
+}
