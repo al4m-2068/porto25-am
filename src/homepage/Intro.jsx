@@ -1,0 +1,102 @@
+import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router';
+import gsap from 'gsap';
+
+const Intro = () => {
+  const navigate = useNavigate();
+  
+  const containerRef = useRef(null);
+  const logoRef = useRef(null); // Ref untuk keseluruhan SVG
+  const garisUtamaRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const garisUtama = garisUtamaRef.current;
+      const logo = logoRef.current;
+      const panjangUtama = garisUtama.getTotalLength();
+
+      // Setup state awal
+      gsap.set(garisUtama, { visibility: "visible" });
+
+      gsap.set(garisUtama, {
+        strokeDasharray: panjangUtama,
+        strokeDashoffset: -panjangUtama
+      });
+
+      // Membuat Timeline GSAP
+      const tl = gsap.timeline({ 
+        delay: 0.3,
+        onComplete: () => {
+          // Navigasi instan ke /home tanpa jeda karena layar sudah tertutup zoom
+          navigate('/home'); 
+        }
+      });
+
+      // 1. Gambar garis utama
+      tl.to(garisUtama, {
+        strokeDashoffset: 0,
+        duration: 2,
+        ease: "power2.inOut"
+      })
+      // 2. Isi warna emas
+      .to(garisUtama, {
+        fill: "#F3AE41",
+        duration: 0.5,
+        ease: "power2.out"
+      }, "-=0.3")
+      // 3. Efek Bouncy ke belakang (mengecil dan miring ke kiri)
+      .to(logo, {
+        scale: 0.6,
+        rotation: -15,
+        duration: 0.6,
+        ease: "back.out(2)" // Efek memantul
+      })
+      // 4. Efek ke depan (membesar ekstrem) untuk transisi membuka halaman
+      .to(logo, {
+        scale: 80, // Angka besar agar SVG menutupi seluruh layar
+        rotation: 10,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power4.in" // Animasi melesat cepat di akhir
+      });
+
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [navigate]);
+
+  return (
+    <div 
+      ref={containerRef} 
+      style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh', 
+        backgroundColor: '#000640', // Background baru sesuai request
+        overflow: 'hidden' // Penting agar saat SVG membesar, tidak muncul scrollbar
+      }}
+    >
+      <svg 
+        ref={logoRef}
+        width="100%" 
+        height="auto" 
+        style={{ maxWidth: '400px', transformOrigin: 'center center' }}
+        viewBox="0 0 302 215" 
+        fill="none" 
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path 
+          ref={garisUtamaRef}
+          style={{ visibility: 'hidden' }}
+          d="M64.678 0.200045C75.4012 -3.35526 104.911 41.1014 130.454 84.0008C151.023 75.2001 170.937 64.628 186.887 52.2C204.799 38.2431 227.289 7.96665 227.289 7.96665C227.289 7.96665 204.609 46.9093 184.549 67.0565C171.312 80.3512 156.052 91.3927 140.104 100.435C158.682 132.505 173.17 159.862 173.197 159.913C217.798 108.136 246.321 34.9806 264.686 33.9666C283.05 32.9537 326.598 98.685 283.136 194.354C272.815 217.073 269.821 214.648 269.781 214.614C269.781 214.614 279.51 181.609 283.136 159.913C296.652 79.0317 264.686 77.1864 264.686 77.1864C264.628 77.279 191.22 194.354 173.197 194.354C163.364 194.354 136.754 151.784 114.586 113.07C103.683 117.759 92.7837 121.612 82.2893 124.708C82.7018 157.202 82.5928 189.265 80.7053 194.354C76.6984 205.159 65.8708 203.393 62.3411 194.354C61.0223 190.977 58.172 163.964 56.1809 131.096C43.736 133.505 32.5791 134.727 23.6077 134.927C-13.7519 135.756 0.515954 120.545 16.8772 117.844C22.2194 116.962 36.4342 114.147 55.0403 109.291C52.8303 58.7667 53.5538 3.88866 64.678 0.200045ZM80.7053 51.1864C80.7053 51.1864 81.3977 74.1004 81.9192 101.639C89.0722 99.4263 96.4889 96.9849 104.007 94.3104C90.5807 70.1689 80.7053 51.1864 80.7053 51.1864Z" 
+          stroke="#F3AE41" 
+          strokeWidth="2" 
+          fill="transparent"
+        />
+      </svg>
+    </div>
+  );
+};
+
+export default Intro;
